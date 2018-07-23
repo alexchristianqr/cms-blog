@@ -1,1 +1,2 @@
-special-vendored-path/* linguist-vendored
+*.vue linguist-language=Vue
+*.js linguist-language=Javascript
