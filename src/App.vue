@@ -35,19 +35,20 @@
 </template>
 
 <script>
-  import Sidebar from './components/layouts/Sidebar'
-  import Navbar     from './components/layouts/Navbar'
+	import Sidebar from './components/layouts/Sidebar'
+	import Navbar  from './components/layouts/Navbar'
 
-  export default {
-    name: 'App',
-    components: {Sidebar, Navbar},
-  }
+	export default {
+		name: 'App',
+		components: {Sidebar, Navbar},
+	}
 </script>
 
 <style>
     @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
     @import "./assets/css/sb-admin.css";
     @import "../node_modules/font-awesome/css/font-awesome.min.css";
+
     .form-inline > input,
     .form-inline > select,
     .form-inline > label,
