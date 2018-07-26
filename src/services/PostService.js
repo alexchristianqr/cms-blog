@@ -1,5 +1,5 @@
 import Vue   from 'vue'
-import Vuex  from 'vuex'
+import * as Vuex  from 'vuex'
 import Axios from 'axios'
 import Env   from './../env'
 
@@ -25,6 +25,7 @@ export default new Vuex.Store({
 			Axios.post(Env.ApiLaravel + '/create-post', self.params).
 				then((r) => {
 					if(r.status === 201) {
+                        self.preLoading = false
 						self.$router.push({name: 'posts'})
 					}
 				}).
@@ -37,6 +38,7 @@ export default new Vuex.Store({
 		updatePost ({commit}, {self}) {
 			Axios.put(Env.ApiLaravel + '/update-post/' + self.params.id, self.params).then((r) => {
 				if(r.status === 200) {
+                    self.preLoading = false
 					self.$router.push({name: 'posts'})
 				}
 			}).catch((e) => {
