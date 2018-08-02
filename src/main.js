@@ -9,7 +9,8 @@ import 'bootstrap'
 
 Vue.config.productionTip = false
 Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-Axios.defaults.headers.common['Api-Key'] = 'rootApiKeyEncript:uDjr3Tn2t46zpSNVBd461QflEqlZBZ+cHMC9f0o1fUs='
+Axios.defaults.headers.common['Type-Project'] = 'Api'
+
 /* eslint-disable no-new */
 new Vue({
 	el: '#app',
