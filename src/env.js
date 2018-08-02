@@ -1,3 +1,3 @@
 export default {
-	ApiLaravel: process.env.API_LARAVEL,
+    ApiLaravel: process.env.API_LARAVEL,
 }

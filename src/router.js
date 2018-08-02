@@ -7,9 +7,9 @@ import Users            from './components/pages/user/Users'
 import UserCreateUpdate from './components/pages/user/UserCreateUpdate'
 import Categories       from './components/pages/category/Categories'
 import Login            from './components/login/Login'
-import StoreToken from './token'
-import Storage    from 'vue-local-storage'
-import Axios      from 'axios'
+import StoreToken       from './token'
+import Storage          from 'vue-local-storage'
+import Axios            from 'axios'
 
 Vue.use(Router)
 
@@ -70,11 +70,13 @@ const router = new Router({
     ],
 })
 
-const validateToken = ()=>{
-    return Storage.get('data-token') === null || Storage.get('data-token') === undefined
+const validateToken = () =>{
+    return Storage.get('data-token') === null || Storage.get('data-token') ===
+        undefined
 }
 const addHeaderAuthorization = () =>{
-    Axios.defaults.headers.common['Authorization'] = 'Bearer ' + Storage.get('data-token')
+    Axios.defaults.headers.common['Authorization'] = 'Bearer ' +
+        Storage.get('data-token')
 }
 const verifyTokenAuth = (next) =>{
     if(validateToken()){//true
@@ -83,11 +85,11 @@ const verifyTokenAuth = (next) =>{
         next()
     }
 }
-const verifyTokenNotAuth = (from,next)=>{
+const verifyTokenNotAuth = (from, next) =>{
     if(validateToken()){//true
         return validateToken()//true
     }else{//false
-        next({name:'home'})
+        next({name: 'home'})
     }
 }
 
@@ -99,16 +101,16 @@ router.beforeEach((to, from, next) =>{
             next({name: 'login'})
         }else{
             if(verifyTokenAuth(next)){//true
-                next({name:'login'})//Si paso algo con el token volvemos a login
+                next({name: 'login'})//Si paso algo con el token volvemos a login
             }else{//false
                 next()//Sino continuamos con la navegacion
             }
         }
     }else{//not authorized
-        if(verifyTokenNotAuth(from,next)){//true
+        if(verifyTokenNotAuth(from, next)){//true
             next()//Si quieren ir a "login", ejecutara verifyTokenAuth()
         }else{//false
-            next({name:'home'})//Sino redireccionamos a "home", ejecutara verifyTokenAuth()
+            next({name: 'home'})//Sino redireccionamos a "home", ejecutara verifyTokenAuth()
         }
     }
 })
