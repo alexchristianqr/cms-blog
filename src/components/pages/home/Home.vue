@@ -1,11 +1,21 @@
 <template>
-    <div class="container">Page Home</div>
+    <div class="container">
+        <div class="alert alert-primary">
+            <h4>Hola <b>{{storage.get('data-auth').name}}</b></h4>
+            <span>Bienvenido al <span class="badge-light pl-1 pr-1">Sistema de Administración de Paneles</span>, en esta plataforma podras gestionar e interactuar con el sitio blog</span>
+        </div>
+    </div>
 </template>
 
 <script>
-  export default {
-    name: 'Home',
-  }
+    import Storage from 'vue-local-storage'
+
+    export default {
+        name: 'Home',
+        data: () => ({
+            storage: Storage,
+        }),
+    }
 </script>
 
 <style scoped>

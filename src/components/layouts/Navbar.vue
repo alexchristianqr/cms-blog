@@ -14,7 +14,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
-                            <span>Alex Chistian <small>(aquispe.developer@gmail.com)</small></span>
+                            <span>{{storage.get('data-auth').name}} <small>({{storage.get('data-auth').email}})</small></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
                             <div class="dropdown-header">
@@ -36,10 +36,14 @@
 </template>
 
 <script>
+    import Storage from 'vue-local-storage'
     import AuthService from '../../services/AuthService'
 
     export default {
         name: 'Navbar',
+        data: () => ({
+            storage: Storage,
+        }),
         methods: {
             doLogout(){
                 AuthService.dispatch('doLogout', {self: this})

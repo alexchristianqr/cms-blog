@@ -13,9 +13,14 @@ export default new Vuex.Store({
             Axios.post(Env.ApiLaravel + '/auth/login', self.params).then((r) =>{
                 if(r.status === 200){
                     Storage.set('data-token', r.data.access_token)
-                    self.$router.replace({name: 'posts'})
+                    Storage.set('data-auth', r.data.auth)
+                    self.$router.replace({name: 'home'})
+                    self.loading.button = false
                 }
             }).catch((e) =>{
+                self.loading.button = false
+                self.params.password = ''
+                self.$refs.inputPassword.focus()
                 console.error(e)
             })
         },
@@ -23,6 +28,7 @@ export default new Vuex.Store({
             Axios.post(Env.ApiLaravel + '/auth/logout').then((r) =>{
                 if(r.status === 200){
                     Storage.remove('data-token')
+                    Storage.remove('data-auth')
                     StoreToken.commit('logoutUser')
                     self.$router.replace({name: 'login'})
                 }
