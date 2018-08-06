@@ -17,19 +17,18 @@
                     </div>
                     <!-- Content Column -->
                     <div class="col-lg-9 mb-4">
-                        <ol class="breadcrumb border-secondary bg-light" style="border: 1px solid;">
+                        <!--<ol class="breadcrumb border-secondary bg-light" style="border: 1px solid;">
                             <li class="breadcrumb-item">
                                 <router-link to="home">Home</router-link>
                             </li>
                             <li class="breadcrumb-item active">About</li>
-                        </ol>
+                        </ol>-->
                         <div class="row">
                             <router-view/>
                         </div>
                     </div>
                 </div>
                 <!-- /.row -->
-
             </div>
             <!-- /.container -->
         </template>
@@ -53,6 +52,7 @@
 
 <style>
     @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+    @import "../node_modules/bootstrap-vue/dist/bootstrap-vue.min.css";
     @import "./assets/css/sb-admin.css";
     @import "../node_modules/font-awesome/css/font-awesome.min.css";
 
@@ -63,6 +63,10 @@
     .form-inline > div,
     .form-inline > button {
         margin: 0 5px 5px 0;
+    }
+
+    .form-control{
+        box-shadow: inherit !important;
     }
 
     .mce-tinymce {
