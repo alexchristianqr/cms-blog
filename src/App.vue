@@ -53,24 +53,7 @@
 <style>
     @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
     @import "../node_modules/bootstrap-vue/dist/bootstrap-vue.min.css";
-    @import "./assets/css/sb-admin.css";
     @import "../node_modules/font-awesome/css/font-awesome.min.css";
-
-    .form-inline > input,
-    .form-inline > select,
-    .form-inline > label,
-    .form-inline > a,
-    .form-inline > div,
-    .form-inline > button {
-        margin: 0 5px 5px 0;
-    }
-
-    .form-control{
-        box-shadow: inherit !important;
-    }
-
-    .mce-tinymce {
-        box-shadow: none !important;
-        -webkit-box-shadow:none !important;
-    }
+    @import "./assets/css/sb-admin.css";
+    @import "./assets/css/app.css";
 </style>

@@ -1,7 +1,6 @@
 /**
- * Autor   :   Alex Christian
- * Email  :   aquispe.developer@gmail.com
- * Github :   https://github.com/acqrdeveloper
+ * Created by Alex Christian
+ * Github https://github.com/acqrdeveloper
  */
 
 export default {

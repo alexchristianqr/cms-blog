@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top nav-bg-default">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <b class="mr-1">Management Panels</b><span class="text-secondary small">(MP)</span>

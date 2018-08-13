@@ -1,0 +1,22 @@
+.nav-bg-default {
+    background-color: #24292e !important;
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.form-inline > input,
+.form-inline > select,
+.form-inline > label,
+.form-inline > a,
+.form-inline > div,
+.form-inline > button {
+    margin: 0 5px 5px 0;
+}
+
+.form-control {
+    box-shadow: inherit !important;
+}
+
+.mce-tinymce {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
