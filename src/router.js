@@ -6,10 +6,12 @@ import PostCreateUpdate from './components/pages/post/PostCreateUpdate'
 import Users            from './components/pages/user/Users'
 import UserCreateUpdate from './components/pages/user/UserCreateUpdate'
 import Categories       from './components/pages/category/Categories'
+import Portfolios       from './components/pages/portfolio/Portfolios'
+import PortfolioCreateUpdate from './components/pages/portfolio/PortfolioCreateUpdate'
 import Login            from './components/pages/login/Login'
-import StoreToken       from './token'
 import Storage          from 'vue-local-storage'
 import Axios            from 'axios'
+import AuthService      from './services/AuthService'
 
 Vue.use(Router)
 
@@ -67,51 +69,86 @@ const router = new Router({
             component: Categories,
             meta: {auth: true, title: 'Categories'},
         },
+        {
+            path: '/portfolio', name: 'portfolios', component: Portfolios,
+            children: [
+                {
+                    path: '/portfolio/create',
+                    name: 'portfolio-create',
+                    component: PortfolioCreateUpdate,
+                },
+                {
+                    path: '/portfolio/update',
+                    name: 'portfolio-update',
+                    component: PortfolioCreateUpdate,
+                },
+            ],
+            meta: {auth: true, title: 'Portfolios'},
+        },
     ],
+    methods: {
+        verifyRoutesWithStorage(to){
+            if(to.name !== 'portfolio-update'){
+                Storage.remove('data-portfolio-temp')
+            }
+            if(to.name !== 'post-update'){
+                Storage.remove('data-post-temp')
+            }
+        },
+        validateToken(){
+            return Storage.get('data-token') === null || Storage.get('data-token') === undefined
+        },
+        addHeaderAuthorization(){
+            Axios.defaults.headers.common['Authorization'] = 'Bearer ' + Storage.get('data-token')
+        },
+        verifyTokenAuth(next){
+            if(this.validateToken()){//true
+                return this.validateToken()//true
+            }else{//false
+                next()
+            }
+        },
+        verifyTokenNotAuth(from, next){
+            if(this.validateToken()){//true
+                return this.validateToken()//true
+            }else{//false
+                next({name: 'home'})
+            }
+        },
+        validateSession(){
+            AuthService.dispatch('validateSession',{self:router})
+        }
+    },
 })
 
-const validateToken = () =>{
-    return Storage.get('data-token') === null || Storage.get('data-token') ===
-        undefined
-}
-const addHeaderAuthorization = () =>{
-    Axios.defaults.headers.common['Authorization'] = 'Bearer ' +
-        Storage.get('data-token')
-}
-const verifyTokenAuth = (next) =>{
-    if(validateToken()){//true
-        return validateToken()//true
-    }else{//false
-        next()
-    }
-}
-const verifyTokenNotAuth = (from, next) =>{
-    if(validateToken()){//true
-        return validateToken()//true
-    }else{//false
-        next({name: 'home'})
-    }
-}
-
 router.beforeEach((to, from, next) =>{
-    addHeaderAuthorization()
+    document.title = '@AlexChristian MP : Home'
+    router.options.methods.verifyRoutesWithStorage(to)
+    router.options.methods.addHeaderAuthorization()
     const requireAuth = to.matched.some(record => record.meta.auth)
+
     if(requireAuth){//authorized
-        if(to.name == 'login' && StoreToken.state.isLoggedIn){
+
+        if(to.name == 'login' && AuthService.state.isLoggedIn){
             next({name: 'login'})
         }else{
-            if(verifyTokenAuth(next)){//true
+            if(router.options.methods.verifyTokenAuth(next)){//true
                 next({name: 'login'})//Si paso algo con el token volvemos a login
             }else{//false
-                next()//Sino continuamos con la navegacion
+                if(router.options.methods.validateSession()){//Validamos si el token ha vencido
+                    next()//Sino continuamos con la navegacion
+                }
             }
         }
+
     }else{//not authorized
-        if(verifyTokenNotAuth(from, next)){//true
+
+        if(router.options.methods.verifyTokenNotAuth(from, next)){//true
             next()//Si quieren ir a "login", ejecutara verifyTokenAuth()
         }else{//false
             next({name: 'home'})//Sino redireccionamos a "home", ejecutara verifyTokenAuth()
         }
+
     }
 })
 
