@@ -47,7 +47,7 @@ export default new Vuex.Store({
             })
         },
         validateSession({commit}, {self}){
-            Axios.get(Env.ApiLaravel + '/get-auth-me',{params:{token:Storage.get('data-token')}}).then((r) =>{
+            Axios.get(Env.ApiLaravel + '/get-auth-me').then((r) =>{
                 if(r.status === 200){
                     Storage.set('data-auth', r.data)
                     return true
