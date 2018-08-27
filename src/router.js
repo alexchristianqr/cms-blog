@@ -19,11 +19,12 @@ const router = new Router({
     mode: 'history',
     linkActiveClass: 'active',
     routes: [
-        {path: '*', redirect: 'login'},
+        {path: '*', redirect: 'login',},
         {
             path: '/login',
             name: 'login',
             component: Login,
+            meta: {title: 'Login'},
         },
         {
             path: '/home',
@@ -38,11 +39,13 @@ const router = new Router({
                     path: '/post/create',
                     name: 'post-create',
                     component: PostCreateUpdate,
+                    meta: {title: 'Create Post'},
                 },
                 {
                     path: '/post/update',
                     name: 'post-update',
                     component: PostCreateUpdate,
+                    meta: {title: 'Update Post'},
                 },
             ],
             meta: {auth: true, title: 'Posts'},
@@ -54,11 +57,13 @@ const router = new Router({
                     path: '/user/create',
                     name: 'user-create',
                     component: UserCreateUpdate,
+                    meta: {title: 'Create User'},
                 },
                 {
                     path: '/user/update',
                     name: 'user-update',
                     component: UserCreateUpdate,
+                    meta: {title: 'Update User'},
                 },
             ],
             meta: {auth: true, title: 'Users'},
@@ -76,11 +81,13 @@ const router = new Router({
                     path: '/portfolio/create',
                     name: 'portfolio-create',
                     component: PortfolioCreateUpdate,
+                    meta: {title: 'Create Project'},
                 },
                 {
                     path: '/portfolio/update',
                     name: 'portfolio-update',
                     component: PortfolioCreateUpdate,
+                    meta: {title: 'Update Project'},
                 },
             ],
             meta: {auth: true, title: 'Portfolios'},
@@ -122,7 +129,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) =>{
-    document.title = '@AlexChristian MP : Home'
+    document.title = 'Alex Christian(management) | ' + to.meta.title
     router.options.methods.verifyRoutesWithStorage(to)
     router.options.methods.addHeaderAuthorization()
     const requireAuth = to.matched.some(record => record.meta.auth)
