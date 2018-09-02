@@ -61,7 +61,7 @@
                 </div>
                 <div class="form-group">
                     <label>Name</label>
-                    <textarea @keyup="keyupKind" v-model="params.name" rows="2" class="form-control"></textarea>
+                    <textarea @input="keyupKind" v-model="params.name" rows="2" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
                     <label>Description</label>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="form-group">
                     <label>Content</label>
-                    <editor v-model="params.content" :init="configEditor"></editor>
+                    <editor id="d1" v-model="params.content"></editor>
                 </div>
             </div>
         </form>
@@ -101,7 +101,7 @@
 <script>
     import Storage       from 'vue-local-storage'
     import Util          from '../../../util'
-    import Editor        from '@tinymce/tinymce-vue'
+    import Editor        from '../../../plugins/TemplateTinymce'
     import PostService   from '../../../services/PostService'
     import ErrorsLaravel from '../../layouts/ErrorsLaravel'
     import PreLoading    from '../../layouts/PreLoading'
@@ -157,15 +157,15 @@
                 this.isPost = this.$route.name === 'post-create'
             },
             keyupKind(){
-                let newtext = ''
-                this.params.name.toLowerCase().trim().split(' ').forEach((v,k)=>{
-                    if(k > 0){
-                        newtext += v.replace('','-')
+                let newKind = ''
+                this.params.name.toLowerCase().trim().split(' ').forEach((v,k)=>{//Devolvemos un array del vue-model con split() y lo recorremos
+                    if(k>0){
+                        newKind += v.replace('','-')
                     }else{
-                        newtext += v
+                        newKind = v
                     }
                 })
-                this.params.kind = newtext
+                this.params.kind = newKind
             },
             onFileChange(e) {
                 this.image = null
@@ -222,9 +222,6 @@
         },
     }
 </script>
-
 <style scoped>
-    #mceu_33 {
-        display: none !important;
-    }
+
 </style>

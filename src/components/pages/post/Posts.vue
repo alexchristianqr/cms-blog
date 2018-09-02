@@ -156,13 +156,6 @@
                 return this.dataPosts.data.filter((item) =>{return item.name.toLowerCase().indexOf(this.inputSearch.toLowerCase()) > -1})
             },
         },
-        watch: {
-            $route(){
-                if(this.$route.name === 'posts'){
-                    Storage.remove('data-post-temp')
-                }
-            },
-        },
         methods: {
             load(){
                 this.getPosts()

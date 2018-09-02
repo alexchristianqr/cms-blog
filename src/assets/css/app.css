@@ -49,3 +49,7 @@ body {
     box-shadow: none !important;
     -webkit-box-shadow: none !important;
 }
+
+.fixed-top{
+    z-index: 100 !important;
+}

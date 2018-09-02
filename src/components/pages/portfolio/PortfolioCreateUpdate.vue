@@ -60,7 +60,7 @@
                 </div>
                 <div class="form-group">
                     <label>Name</label>
-                    <textarea @keyup="keyupKind" v-model="params.name" rows="2" class="form-control"></textarea>
+                    <textarea @input="keyupKind" v-model="params.name" rows="2" class="form-control"></textarea>
                 </div>
                 <div class="row">
                     <div class="col-6">
@@ -82,7 +82,7 @@
                 <!--</div>-->
                 <div class="form-group">
                     <label>Description</label>
-                    <editor v-model="params.description" :init="configEditor"></editor>
+                    <editor id="d2" v-model="params.description"></editor>
                 </div>
             </div>
         </form>
@@ -95,7 +95,7 @@
     import ErrorsLaravel    from '../../layouts/ErrorsLaravel'
     import PreLoading       from '../../layouts/PreLoading'
     import VueSelect        from 'vue-select'
-    import Editor           from '@tinymce/tinymce-vue'
+    import Editor           from '../../../plugins/TemplateTinymce'
     import PortfolioService from '../../../services/PortfolioService'
 
     export default {
@@ -111,7 +111,7 @@
             readonlyDescription: false,
             image: null,
             selectedPath: null,
-            tags:[],
+            tags: [],
         }),
         created(){
             this.load()
@@ -129,29 +129,45 @@
                         this.params = Storage.get('data-portfolio-temp')
                     }
                 }
-                // this.getPaths()
             },
             createOrUpdate(){
                 this.loading = true
                 if(this.isPost){//Crear
-                    PortfolioService.dispatch('createPost', {self: this})
+                    PortfolioService.dispatch('createPortfolio', {self: this})
                 }else{//Actualizar
-                    PortfolioService.dispatch('updatePost', {self: this})
+                    PortfolioService.dispatch('updatePortfolio', {self: this})
                 }
             },
             validateIsPostOrPut(){
                 this.isPost = this.$route.name === 'portfolio-create'
             },
             keyupKind(){
-                let newtext = ''
-                this.params.name.toLowerCase().trim().split(' ').forEach((v,k)=>{
-                    if(k > 0){
-                        newtext += v.replace('','-')
+                let newKind = ''
+                this.params.name.toLowerCase().trim().split(' ').forEach((v,k)=>{//Devolvemos un array del vue-model con split() y lo recorremos
+                    if(k>0){
+                        newKind += v.replace('','-')
                     }else{
-                        newtext += v
+                        newKind = v
                     }
                 })
-                this.params.kind = newtext
+                if(typeof newKind.split('(') == 'object' || typeof newKind.split(')') == 'object'){
+                    let newSubKind = '', temp = ''
+                    newKind.split('(').forEach((vv,kk)=>{//Devolvemos un array del vue-model con split() y lo recorremos
+                        if(vv.split(')').length === 2){
+                                temp = ''
+                                temp += vv.replace(')','')
+                                newSubKind =  newSubKind + '-' + temp
+                        }else{
+                            if(kk<=0){
+                                newSubKind += vv.replace(' ','-')
+                            }else{
+                                newSubKind += vv.replace('','-')
+                            }
+                        }
+                    })
+                    newKind = newSubKind
+                }
+                this.params.kind = newKind
             },
         }
     }

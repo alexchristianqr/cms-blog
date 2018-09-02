@@ -138,8 +138,8 @@
             params: {
                 page: 1,
                 paginate: 5,
-                // dateFilterStart: Moment().format('YYYY-MM-DD'),
-                // dateFilterEnd: Moment().format('YYYY-MM-DD'),
+                dateFilterStart: Moment().format('YYYY-MM-DD'),
+                dateFilterEnd: Moment().format('YYYY-MM-DD'),
             },
         }),
         created(){
@@ -150,13 +150,6 @@
                 return this.dataPortfolios.data.filter((item) =>{return item.name.toLowerCase().indexOf(this.inputSearch.toLowerCase()) > -1})
             },
         },
-        // watch: {
-        //     $route(){
-        //         if(this.$route.name === 'portfolios'){
-        //             Storage.remove('data-portfolio-temp')
-        //         }
-        //     },
-        // },
         methods: {
             load(){
                 this.getPortfolios()

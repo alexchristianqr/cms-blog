@@ -19,10 +19,10 @@ export default new Vuex.Store({
                 self.loading.table = false
             })
         },
-        createPost({commit}, {self}){
-            Axios.post(Env.ApiLaravel + '/create-post', self.params).then((r) =>{
+        createPortfolio({commit}, {self}){
+            Axios.post(Env.ApiLaravel + '/create-portfolio', self.params).then((r) =>{
                 if(r.status === 201){
-                    self.$router.push({name: 'posts'})
+                    self.$router.push({name: 'portfolios'})
                     self.loading = false
                 }
             }).catch((e) =>{
@@ -31,10 +31,10 @@ export default new Vuex.Store({
                 self.loading = false
             })
         },
-        updatePost({commit}, {self}){
-            Axios.put(Env.ApiLaravel + '/update-post/' + self.params.id, self.params).then((r) =>{
+        updatePortfolio({commit}, {self}){
+            Axios.put(Env.ApiLaravel + '/update-portfolio/' + self.params.id, self.params).then((r) =>{
                 if(r.status === 200){
-                    self.$router.push({name: 'posts'})
+                    self.$router.push({name: 'portfolios'})
                     self.loading = false
                 }
             }).catch((e) =>{
