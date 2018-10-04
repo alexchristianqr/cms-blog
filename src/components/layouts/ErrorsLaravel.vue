@@ -15,17 +15,17 @@
 </template>
 
 <script>
-  export default {
-    name: 'ErrorsLaravel',
-    props:{
-      dataErrors :{}
-    },
-    methods:{
-      close(){
-        this.$emit('eventClose', this)
-      }
+    export default {
+        name: 'ErrorsLaravel',
+        props: {
+            dataErrors: {},
+        },
+        methods: {
+            close(){
+                this.$emit('eventClose', this)
+            },
+        },
     }
-  }
 </script>
 
 <style scoped>

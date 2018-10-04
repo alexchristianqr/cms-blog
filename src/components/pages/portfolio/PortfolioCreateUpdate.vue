@@ -81,6 +81,38 @@
                     <!--<vue-select single v-model="selectedPath" :options="dataPaths" label="name" track-by="id" @input="changePath"></vue-select>-->
                 <!--</div>-->
                 <div class="form-group">
+                    <label>Repositories</label>
+                    <!--<div class="input-group">-->
+                        <!--<div class="input-group-prepend">-->
+                            <!--<i class="fa fa-github"></i>-->
+                        <!--</div>-->
+                            <!--<input type="text" class="form-control">-->
+                        <!--&lt;!&ndash;<div class="input-group-append"><i class="fa fa-github"></i></div>&ndash;&gt;-->
+                    <!--</div>-->
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-github"></i></span>
+                        </div>
+                        <input v-model="params.repository_github" type="text" class="form-control" placeholder="Repository in Github">
+                        <template v-if="params.repository_github">
+                            <div class="input-group-append">
+                                <button class="btn btn-danger" @click.prevent="params.repository_github=''"><i class="fa fa-times"></i></button>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-codepen"></i></span>
+                        </div>
+                        <input v-model="params.repository_codepen" type="text" class="form-control" placeholder="Repository in Codepen">
+                        <template  v-if="params.repository_codepen">
+                            <div class="input-group-append">
+                                <button class="btn btn-danger" @click.prevent="params.repository_codepen=''"><i class="fa fa-times"></i></button>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label>Description</label>
                     <editor id="d2" v-model="params.description"></editor>
                 </div>
