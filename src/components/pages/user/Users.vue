@@ -114,7 +114,7 @@
                                 </nav>
                             </div>
                             <div class="col-8">
-                                <b-pagination class="justify-content-end" size="md" :total-rows="dataUsers.total" v-model="params.page" :per-page="parseInt(dataUsers.per_page)" @input="filters"></b-pagination>
+                                <b-pagination class="justify-content-end" size="md" :total-rows="dataUsers.total" v-model="params.page" :per-page="parseInt(dataUsers.per_page)" @input="doRequestServer"></b-pagination>
                             </div>
                         </div>
                     </template>
@@ -129,49 +129,55 @@
     import bPagination from 'bootstrap-vue/es/components/pagination/pagination';
 
     export default {
-        name: 'Users',
-        components:{bPagination},
-        data: () => ({
-            inputSearch: '',
-            dataUsers: [],
-            loading: {
-                table: false,
-            },
-            params:{
-                page: 1,
-                paginate: 5,
-            },
-        }),
-        created(){
-            this.load()
+      name:'Users',
+      components:{bPagination},
+      data:()=>({
+        inputSearch:'',
+        dataUsers:[],
+        loading:{
+          table:false,
         },
-        computed: {
-            filteredUsers(){
-                let validate = this.dataUsers.data.filter((obj) =>{return obj.name.toLowerCase().indexOf(this.inputSearch.toLowerCase()) > -1 || obj.lastname.toLowerCase().indexOf(this.inputSearch.toLowerCase()) > -1})
-                if(validate.length > 0){
-                    return validate
-                }else{
-                    return false
-                }
-            },
+        params:{
+          page:1,
+          paginate:5,
         },
-        methods: {
-            load(){
-                this.getUsers()
-                this.params.page = this.dataUsers.current_page
-            },
-            getUsers(){
-                this.loading.table = true
-                UserService.dispatch('getUsers', {self: this})
-            },
-            filters(){
-                this.getUsers()
-            },
-            cleanSearch () {
-                this.inputSearch = ''
-                this.$refs.ref_inputSearch.focus()
-            },
+      }),
+      created(){
+        this.load()
+      },
+      computed:{
+        filteredUsers(){
+          const validateName = (item)=>{
+            return item.name.toLowerCase().indexOf(this.input.search.toLowerCase()) > -1
+          }
+          const validateLastName = (item)=>{
+            return item.lastname.toLowerCase().indexOf(this.input.search.toLowerCase()) > -1
+          }
+          return this.dataUsers.data.filter((item)=>{
+            return validateName(item) || validateLastName(item)
+          })
         },
+      },
+      methods:{
+        load(){
+          this.getUsers()
+          this.params.page = this.dataUsers.current_page
+        },
+        doRequestServer(){
+          this.getUsers()
+        },
+        getUsers(){
+          this.loading.table = true
+          UserService.dispatch('getUsers', {self:this})
+        },
+        filters(){
+          this.getUsers()
+        },
+        cleanSearch(){
+          this.inputSearch = ''
+          this.$refs.ref_inputSearch.focus()
+        },
+      },
     }
 </script>
 
