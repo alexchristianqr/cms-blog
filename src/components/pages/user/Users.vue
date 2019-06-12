@@ -133,7 +133,7 @@
       components:{bPagination},
       data:()=>({
         inputSearch:'',
-        dataUsers:[],
+        dataUsers:{data:[]},
         loading:{
           table:false,
         },
@@ -161,7 +161,6 @@
       methods:{
         load(){
           this.getUsers()
-          this.params.page = this.dataUsers.current_page
         },
         doRequestServer(){
           this.getUsers()
