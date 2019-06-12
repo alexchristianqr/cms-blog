@@ -48,8 +48,8 @@
         name: 'Login',
         data: () => ({
             params: {
-                email: 'aquispe.developer@gmail.com',
-                password: '12345678',
+                email: '',
+                password: '',
             },
             errors: {
                 email: '',
