@@ -26,15 +26,6 @@
           </div>
           <hr>
           <div class="form-inline">
-            <!--<div class="input-group w-20">-->
-            <!--<input title="Buscar" type="text" v-model="inputSearch" ref="search" class="form-control" placeholder="Buscar">-->
-            <!--<template v-if="inputSearch !== ''">-->
-            <!--<div class="input-group-append">-->
-            <!--<button class="btn btn-secondary" @click="cleanSearch"><i class="icon-close"></i></button>-->
-            <!--</div>-->
-            <!--</template>-->
-            <!--</div>-->
-
             <div class="input-group w-35">
               <input v-model="inputSearch" ref="ref_inputSearch" type="text" placeholder="Search" class="form-control">
               <div v-if="inputSearch != ''" class="input-group-append">
@@ -43,61 +34,62 @@
                 </button>
               </div>
             </div>
-            <vue-treeselect placeholder="Cliente" :options="optionsDataClients" :limit="1" :limitText="count => `y ${count} más`" v-model="params.client_id" class="text-uppercase" @input="doRequestServer">
-              <span slot="option-label" slot-scope="{ node }" class="float-left">{{ node.label }}</span>
-            </vue-treeselect>
+            <div title="Fecha" class="date_range form-control w-20 text-truncate">
+              <i class="fa fa-calendar mr-1 text-primary"></i>
+              <span></span>
+            </div>
             <button class="btn btn-secondary" @click="load"><i class="fa fa-refresh fa-fw"></i></button>
-            <input v-model="params.dateFilterStart" type="date" class="form-control" @input="filtereds">
-            <input v-model="params.dateFilterEnd" type="date" class="form-control" @input="filtereds">
+            <!--<input v-model="params.dateFilterStart" type="date" class="form-control" @input="filtereds">-->
+            <!--<input v-model="params.dateFilterEnd" type="date" class="form-control" @input="filtereds">-->
           </div>
         </div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-sm table-bordered mb-0">
-            <thead class="table-light">
-            <tr>
-              <th>#</th>
-              <th>Name Complete</th>
-              <th>Email</th>
-              <th>Updated</th>
-              <th class="text-center">Status</th>
-            </tr>
-            </thead>
-            <tbody class="small">
-            <template v-if="loading.table">
+              <thead class="table-light">
               <tr>
-                <td colspan="6" class="text-center">
-                  <div class="p-2">
-                    <i class="fa fa-circle-o-notch fa-spin fa-2x text-secondary"></i>
-                    <p>Obteniendo Informacion!</p>
-                  </div>
-                </td>
+                <th>#</th>
+                <th>Name Complete</th>
+                <th>Email</th>
+                <th>Updated</th>
+                <th class="text-center">Status</th>
               </tr>
-            </template>
-            <template v-else-if="!loading.table && filteredUsers.length > 0">
-              <tr v-for="(v,k) in filteredUsers">
-                <th>{{k+1}}</th>
-                <td width="30%" class="text-uppercase">{{v.name+' '+v.lastname}}</td>
-                <td>{{v.email}}</td>
-                <td>{{v.updated_at}}</td>
-                <td class="text-center">
-                  <i v-if="v.status == 'A'" class="fa fa-circle text-success"></i>
-                  <i v-if="v.status == 'I'" class="fa fa-circle text-danger"></i>
-                </td>
-              </tr>
-            </template>
-            <template v-else-if="!loading.table && filteredUsers.length < 1">
-              <tr>
-                <td colspan="6" class="text-center">
-                  <div class="p-2">
-                    <i class="fa fa-exclamation-triangle fa-2x text-danger"></i>
-                    <p>Usted no cuenta con información disponible!</p>
-                  </div>
-                </td>
-              </tr>
-            </template>
-            </tbody>
-          </table>
+              </thead>
+              <tbody class="small">
+              <template v-if="loading.table">
+                <tr>
+                  <td colspan="6" class="text-center">
+                    <div class="p-2">
+                      <i class="fa fa-circle-o-notch fa-spin fa-2x text-secondary"></i>
+                      <p>Obteniendo Informacion!</p>
+                    </div>
+                  </td>
+                </tr>
+              </template>
+              <template v-else-if="!loading.table && filteredUsers.length > 0">
+                <tr v-for="(v,k) in filteredUsers">
+                  <th>{{k+1}}</th>
+                  <td width="30%" class="text-uppercase">{{v.name+' '+v.lastname}}</td>
+                  <td>{{v.email}}</td>
+                  <td>{{v.updated_at}}</td>
+                  <td class="text-center">
+                    <i v-if="v.status == 'A'" class="fa fa-circle text-success"></i>
+                    <i v-if="v.status == 'I'" class="fa fa-circle text-danger"></i>
+                  </td>
+                </tr>
+              </template>
+              <template v-else-if="!loading.table && filteredUsers.length < 1">
+                <tr>
+                  <td colspan="6" class="text-center">
+                    <div class="p-2">
+                      <i class="fa fa-exclamation-triangle fa-2x text-danger"></i>
+                      <p>Usted no cuenta con información disponible!</p>
+                    </div>
+                  </td>
+                </tr>
+              </template>
+              </tbody>
+            </table>
           </div>
           <template v-if="!loading.table && filteredUsers.length > 0">
             <div class="row">
@@ -117,25 +109,28 @@
 
 <script>
   import UserService from '../../../services/UserService'
+  import Helper from '../../../helper'
+  import Moment from 'moment'
 
   export default {
     name: 'Users',
     data: () => ({
       inputSearch: '',
-      dataUsers: {data: []},
       loading: {
         table: false,
       },
+      dataUsers: {data: []},
       params: {
         page: 1,
         paginate: 10,
+        date_range: Moment().subtract(6, 'days').format('YYYY-MM-DD') + '/' + Moment().format('YYYY-MM-DD'),
       },
     }),
-    created () {
+    created(){
       this.load()
     },
     computed: {
-      filteredUsers () {
+      filteredUsers(){
         const validateName = (item) => {
           return item.name.toLowerCase().indexOf(this.inputSearch.toLowerCase()) > -1
         }
@@ -145,24 +140,38 @@
       },
     },
     methods: {
-      load () {
+      load(){
+        this.getUsers()
+        Helper.initializeDateRangePicker({self: this})
+      },
+      validateRouteNavigation(){
+        return !(this.$route.name === 'users')
+      },
+      doRequestServer(){
         this.getUsers()
       },
-      doRequestServer () {
-        this.getUsers()
-      },
-      getUsers () {
+      getUsers(){
         this.loading.table = true
         UserService.dispatch('getUsers', {self: this})
       },
-      filters () {
+      filters(){
         this.getUsers()
       },
-      cleanSearch () {
+      cleanSearch(){
         this.inputSearch = ''
         this.$refs.ref_inputSearch.focus()
       },
     },
+    // watch: {
+    //   '$route' () {
+    //     if (!this.validateRouteNavigation()) {
+    //       Helper.initializeDateRangePicker({self: this})
+    //     }
+    //   },
+    // },
+    // updated () {
+    //   Helper.initializeDateRangePicker({self: this})
+    // },
   }
 </script>
 
