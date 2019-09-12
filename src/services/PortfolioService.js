@@ -12,6 +12,7 @@ export default new Vuex.Store({
         then((r) => {
           if (r.status === 200) {
             self.dataPortfolios = r.data
+            self.params.page = r.data.current_page
             self.loading.table = false
           }
         }).

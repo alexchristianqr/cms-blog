@@ -117,7 +117,8 @@
                                 </nav>
                             </div>
                             <div class="col-8">
-                                <b-pagination class="justify-content-end" size="md" :total-rows="dataPosts.total" v-model="params.page" :per-page="parseInt(dataPosts.per_page)" @input="filters"></b-pagination>
+                              <b-pagination class="my-auto justify-content-end" :total-rows="dataPosts.total" :per-page="parseInt(dataPosts.per_page)" v-model="params.page" @input="filters"/>
+                                <!--<b-pagination class="justify-content-end" size="md" :total-rows="dataPosts.total" v-model="params.page" :per-page="parseInt(dataPosts.per_page)" @input="filters"></b-pagination>-->
                             </div>
                         </div>
                     </template>
@@ -131,11 +132,11 @@
     import PostService from '../../../services/PostService'
     import Storage     from 'vue-local-storage'
     import Moment      from 'moment'
-    import bPagination from 'bootstrap-vue/es/components/pagination/pagination';
+    // import bPagination from 'bootstrap-vue/esm/components/pagination/pagination';
 
     export default {
         name: 'Posts',
-        components:{bPagination},
+        // components:{bPagination},
         data: () => ({
             loading: {table: true},
             dataPosts: [],

@@ -125,11 +125,11 @@
     import PortfolioService from '../../../services/PortfolioService'
     import Storage     from 'vue-local-storage'
     import Moment      from 'moment'
-    import bPagination from 'bootstrap-vue/es/components/pagination/pagination';
+    // import bPagination from 'bootstrap-vue/src/components/pagination/pagination.spec';
 
     export default {
         name: 'Portfolios',
-        components:{bPagination},
+        // components:{bPagination},
         data: () => ({
             loading: {table: true},
             dataPortfolios: [],
