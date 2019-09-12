@@ -38,9 +38,7 @@
               <i class="fa fa-calendar mr-1 text-primary"></i>
               <span></span>
             </div>
-            <button class="btn btn-secondary" @click="load"><i class="fa fa-refresh fa-fw"></i></button>
-            <!--<input v-model="params.dateFilterStart" type="date" class="form-control" @input="filtereds">-->
-            <!--<input v-model="params.dateFilterEnd" type="date" class="form-control" @input="filtereds">-->
+            <button class="btn btn-primary" @click="load"><i class="fa fa-refresh fa-fw"></i></button>
           </div>
         </div>
         <div class="card-body">
@@ -55,18 +53,8 @@
                 <th class="text-center">Status</th>
               </tr>
               </thead>
-              <tbody class="small">
-              <template v-if="loading.table">
-                <tr>
-                  <td colspan="6" class="text-center">
-                    <div class="p-2">
-                      <i class="fa fa-circle-o-notch fa-spin fa-2x text-secondary"></i>
-                      <p>Obteniendo Informacion!</p>
-                    </div>
-                  </td>
-                </tr>
-              </template>
-              <template v-else-if="!loading.table && filteredUsers.length > 0">
+              <load-tbody colspan="5" v-if="loading.table"/>
+              <tbody v-if="!loading.table && filteredUsers.length > 0" class="small">
                 <tr v-for="(v,k) in filteredUsers">
                   <th>{{k+1}}</th>
                   <td width="30%" class="text-uppercase">{{v.name+' '+v.lastname}}</td>
@@ -77,18 +65,8 @@
                     <i v-if="v.status == 'I'" class="fa fa-circle text-danger"></i>
                   </td>
                 </tr>
-              </template>
-              <template v-else-if="!loading.table && filteredUsers.length < 1">
-                <tr>
-                  <td colspan="6" class="text-center">
-                    <div class="p-2">
-                      <i class="fa fa-exclamation-triangle fa-2x text-danger"></i>
-                      <p>Usted no cuenta con información disponible!</p>
-                    </div>
-                  </td>
-                </tr>
-              </template>
               </tbody>
+              <failed-tbody colspan="5" v-if="!loading.table && filteredUsers.length < 1"/>
             </table>
           </div>
           <template v-if="!loading.table && filteredUsers.length > 0">
@@ -111,9 +89,12 @@
   import UserService from '../../../services/UserService'
   import Helper from '../../../helper'
   import Moment from 'moment'
+  import LoadTbody from '../../layouts/LoadTbody'
+  import FailedTbody from '../../layouts/FailedTbody'
 
   export default {
     name: 'Users',
+    components: {FailedTbody, LoadTbody},
     data: () => ({
       inputSearch: '',
       loading: {
