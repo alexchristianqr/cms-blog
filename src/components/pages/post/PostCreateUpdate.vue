@@ -36,7 +36,7 @@
                         <div class="card-body">
                             <template v-if="image != null">
                                 <div class="img-thumbnail border-0 text-center">
-                                    <img :src="image" alt="" class=" w-25 h-25">
+                                    <img :src="image" alt="" class="w-100 h-25">
                                 </div>
                                 <div class="col-5 mx-auto">
                                     <input type="text" class="form-control" placeholder="example.png">
@@ -44,12 +44,11 @@
                             </template>
                             <template v-else>
                                 <div class="img-thumbnail text-center border-0 m-0 p-0">
-                                    <!--<i class="fa fa-image fa-5x"></i>-->
                                     <template v-if="isPost">
-                                        <img :src="image" alt="" class=" w-25 h-25">
+                                        <img :src="image" alt="" class="w-100 h-25">
                                     </template>
                                     <template v-else>
-                                        <img :src="params.path_name+params.image" alt="" class=" w-25 h-25">
+                                        <img :src="params.path_name + params.image" alt="" class="w-100 h-25">
                                     </template>
                                 </div>
                             </template>

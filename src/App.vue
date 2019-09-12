@@ -51,5 +51,6 @@
     @import "../node_modules/bootstrap-vue/dist/bootstrap-vue.min.css";
     @import "../node_modules/font-awesome/css/font-awesome.min.css";
     @import "../node_modules/daterangepicker/daterangepicker.css";
+    @import "./assets/css/dev.css";
     @import "./assets/css/app.css";
 </style>

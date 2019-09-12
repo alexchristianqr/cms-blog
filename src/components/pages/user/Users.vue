@@ -26,7 +26,7 @@
           </div>
           <hr>
           <div class="form-inline">
-            <div class="input-group w-35">
+            <div class="input-group w-25">
               <input v-model="inputSearch" ref="ref_inputSearch" type="text" placeholder="Search" class="form-control">
               <div v-if="inputSearch != ''" class="input-group-append">
                 <button title="Limpiar Busqueda" @click="cleanSearch()" type="button" class="btn btn-primary">
@@ -34,7 +34,7 @@
                 </button>
               </div>
             </div>
-            <div title="Fecha" class="date_range form-control w-20 text-truncate">
+            <div title="Fecha" class="date_range form-control w-30 text-truncate">
               <i class="fa fa-calendar mr-1 text-primary"></i>
               <span></span>
             </div>
@@ -43,30 +43,36 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-sm table-bordered mb-0">
+            <table class="table table-sm table-bordered mb-0 table-hover">
               <thead class="table-light">
               <tr>
                 <th>#</th>
                 <th>Name Complete</th>
                 <th>Email</th>
                 <th>Updated</th>
-                <th class="text-center">Status</th>
               </tr>
               </thead>
-              <load-tbody colspan="5" v-if="loading.table"/>
+              <load-tbody colspan="4" v-if="loading.table"/>
               <tbody v-if="!loading.table && filteredUsers.length > 0" class="small">
                 <tr v-for="(v,k) in filteredUsers">
-                  <th>{{k+1}}</th>
-                  <td width="30%" class="text-uppercase">{{v.name+' '+v.lastname}}</td>
-                  <td>{{v.email}}</td>
-                  <td>{{v.updated_at}}</td>
-                  <td class="text-center">
-                    <i v-if="v.status == 'A'" class="fa fa-circle text-success"></i>
-                    <i v-if="v.status == 'I'" class="fa fa-circle text-danger"></i>
+                  <th class="align-middle">{{k+1}}</th>
+                  <td :title="'ID=' + v.id + ', ' + 'NAME=' + v.name + ', LASTNAME=' + v.lastname" class="mwp-200 align-middle">
+                    <div class="d-inline-block text-truncate align-middle mw-100 small">
+                      <i title="Activo" v-if="v.status == 'A'" class="fa fa-circle text-success mr-1"></i>
+                      <i title="Inactivo" v-if="v.status == 'I'" class="fa fa-circle text-danger mr-1"></i>
+                      <template v-if="v.status == 'A'">
+                        <span class="text-uppercase">{{v.name}}</span>
+                      </template>
+                      <template v-else>
+                        <del class="text-uppercase">{{v.name}}</del>
+                      </template>
+                    </div>
                   </td>
+                  <td class="align-middle">{{v.email}}</td>
+                  <td class="align-middle">{{v.updated_at}}</td>
                 </tr>
               </tbody>
-              <failed-tbody colspan="5" v-if="!loading.table && filteredUsers.length < 1"/>
+              <failed-tbody colspan="4" v-if="!loading.table && filteredUsers.length < 1"/>
             </table>
           </div>
           <template v-if="!loading.table && filteredUsers.length > 0">
