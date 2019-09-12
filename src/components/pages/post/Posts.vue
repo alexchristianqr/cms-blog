@@ -134,8 +134,7 @@
     },
     computed: {
       filteredPosts(){
-        return this.dataPosts.data.filter(
-          (item) => {return item.name.toLowerCase().indexOf(this.inputSearch.toLowerCase()) > -1})
+        return this.dataPosts.data.filter((item) => {return item.name.toLowerCase().indexOf(this.inputSearch.toLowerCase()) > -1})
       },
     },
     methods: {
@@ -157,6 +156,9 @@
         this.inputSearch = ''
         this.$refs.ref_inputSearch.focus()
       },
+    },
+    updated () {
+      Helper.initializeDateRangePicker({self: this})
     },
   }
 </script>

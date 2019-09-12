@@ -143,16 +143,9 @@
         this.$refs.ref_inputSearch.focus()
       },
     },
-    // watch: {
-    //   '$route' () {
-    //     if (!this.validateRouteNavigation()) {
-    //       Helper.initializeDateRangePicker({self: this})
-    //     }
-    //   },
-    // },
-    // updated () {
-    //   Helper.initializeDateRangePicker({self: this})
-    // },
+    updated () {
+      Helper.initializeDateRangePicker({self: this})
+    },
   }
 </script>
 
