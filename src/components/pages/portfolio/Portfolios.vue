@@ -40,7 +40,7 @@
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-sm table-bordered mb-0 table-hover">
-            <thead class="table-light">
+            <thead class="table-secondary">
             <tr>
               <th>#</th>
               <th>Title</th>
