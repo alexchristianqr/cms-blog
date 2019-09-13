@@ -51,7 +51,7 @@
               <th>Title</th>
               <th>Published</th>
               <th>Updated</th>
-              <th class="text-center">Status</th>
+              <th>Status</th>
               <th></th>
             </tr>
             </thead>
@@ -64,9 +64,13 @@
                 </td>
                 <td class="align-middle">{{v.published}}</td>
                 <td class="align-middle">{{v.updated_at}}</td>
-                <td class="text-center align-middle">
-                  <i v-if="v.status == 'A'" class="fa fa-circle text-success"></i>
-                  <i v-if="v.status == 'I'" class="fa fa-circle text-danger"></i>
+                <td class="align-middle">
+                  <!--<i v-if="v.status == 'A'" class="fa fa-circle text-success"></i>-->
+                  <!--<i v-if="v.status == 'I'" class="fa fa-circle text-danger"></i>-->
+                  <!--<i v-if="v.status == 'P'" class="fa fa-circle text-warning"></i>-->
+                  <span v-if="v.status == 'A'" class="badge badge-success font-weight-light">ACTIVE</span>
+                  <span v-if="v.status == 'I'" class="badge badge-danger font-weight-light">INACTIVE</span>
+                  <span v-if="v.status == 'P'" class="badge badge-warning font-weight-light">PENDING</span>
                 </td>
                 <td class="text-right align-middle">
                   <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
