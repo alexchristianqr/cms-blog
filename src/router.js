@@ -7,8 +7,7 @@ import Users from './components/pages/user/Users'
 import UserCreateUpdate from './components/pages/user/UserCreateUpdate'
 import Categories from './components/pages/category/Categories'
 import Portfolios from './components/pages/portfolio/Portfolios'
-import PortfolioCreateUpdate
-  from './components/pages/portfolio/PortfolioCreateUpdate'
+import PortfolioCreateUpdate from './components/pages/portfolio/PortfolioCreateUpdate'
 import Login from './components/pages/login/Login'
 import Storage from 'vue-local-storage'
 import Axios from 'axios'
@@ -17,150 +16,150 @@ import AuthService from './services/AuthService'
 Vue.use(Router)
 
 const router = new Router({
-  mode: 'history',
-  linkActiveClass: 'active',
-  routes: [
-    {path: '*', redirect: 'login'},
+  mode:'history',
+  linkActiveClass:'active',
+  routes:[
+    {path:'*', redirect:'login'},
     {
-      path: '/login',
-      name: 'login',
-      component: Login,
-      meta: {title: 'Login'},
+      path:'/login',
+      name:'login',
+      component:Login,
+      meta:{title:'Login'},
     },
     {
-      path: '/home',
-      name: 'home',
-      component: Home,
-      meta: {auth: true, title: 'Home'},
+      path:'/home',
+      name:'home',
+      component:Home,
+      meta:{auth:true, title:'Home'},
     },
     {
-      path: '/post', name: 'posts', component: Posts,
-      children: [
+      path:'/post', name:'posts', component:Posts,
+      children:[
         {
-          path: '/post/create',
-          name: 'post-create',
-          component: PostCreateUpdate,
-          meta: {title: 'Create Post'},
+          path:'/post/create',
+          name:'post-create',
+          component:PostCreateUpdate,
+          meta:{title:'Create Post'},
         },
         {
-          path: '/post/update',
-          name: 'post-update',
-          component: PostCreateUpdate,
-          meta: {title: 'Update Post'},
+          path:'/post/update',
+          name:'post-update',
+          component:PostCreateUpdate,
+          meta:{title:'Update Post'},
         },
       ],
-      meta: {auth: true, title: 'Posts'},
+      meta:{auth:true, title:'Posts'},
     },
     {
-      path: '/user',
-      name: 'users',
-      component: Users,
-      children: [
+      path:'/user',
+      name:'users',
+      component:Users,
+      children:[
         {
-          path: '/user/create',
-          name: 'user-create',
-          component: UserCreateUpdate,
-          meta: {title: 'Create User'},
+          path:'/user/create',
+          name:'user-create',
+          component:UserCreateUpdate,
+          meta:{title:'Create User'},
         },
         {
-          path: '/user/update',
-          name: 'user-update',
-          component: UserCreateUpdate,
-          meta: {title: 'Update User'},
+          path:'/user/update',
+          name:'user-update',
+          component:UserCreateUpdate,
+          meta:{title:'Update User'},
         },
       ],
-      meta: {auth: true, title: 'Users'},
+      meta:{auth:true, title:'Users'},
     },
     {
-      path: '/category',
-      name: 'categories',
-      component: Categories,
-      meta: {auth: true, title: 'Categories'},
+      path:'/category',
+      name:'categories',
+      component:Categories,
+      meta:{auth:true, title:'Categories'},
     },
     {
-      path: '/portfolio', name: 'portfolios', component: Portfolios,
-      children: [
+      path:'/portfolio', name:'portfolios', component:Portfolios,
+      children:[
         {
-          path: '/portfolio/create',
-          name: 'portfolio-create',
-          component: PortfolioCreateUpdate,
-          meta: {title: 'Create Project'},
+          path:'/portfolio/create',
+          name:'portfolio-create',
+          component:PortfolioCreateUpdate,
+          meta:{title:'Create Project'},
         },
         {
-          path: '/portfolio/update',
-          name: 'portfolio-update',
-          component: PortfolioCreateUpdate,
-          meta: {title: 'Update Project'},
+          path:'/portfolio/update',
+          name:'portfolio-update',
+          component:PortfolioCreateUpdate,
+          meta:{title:'Update Project'},
         },
       ],
-      meta: {auth: true, title: 'Portfolios'},
+      meta:{auth:true, title:'Portfolios'},
     },
   ],
-  methods: {
-    verifyRoutesWithStorage (to) {
-      if (to.name !== 'portfolio-update') {
+  methods:{
+    verifyRoutesWithStorage(to){
+      if(to.name !== 'portfolio-update'){
         Storage.remove('data-portfolio-temp')
       }
-      if (to.name !== 'post-update') {
+      if(to.name !== 'post-update'){
         Storage.remove('data-post-temp')
       }
     },
-    validateToken () {
+    validateToken(){
       return Storage.get('data-token') === null || Storage.get('data-token') ===
         undefined
     },
-    addHeaderAuthorization () {
+    addHeaderAuthorization(){
       Axios.defaults.headers.common['Authorization'] = 'Bearer ' +
         Storage.get('data-token')
     },
-    verifyTokenAuth (next) {
-      if (this.validateToken()) {//true
+    verifyTokenAuth(next){
+      if(this.validateToken()){//true
         return this.validateToken()//true
-      } else {//false
+      }else{//false
         next()
       }
     },
-    verifyTokenNotAuth (from, next) {
-      if (this.validateToken()) {//true
+    verifyTokenNotAuth(from, next){
+      if(this.validateToken()){//true
         return this.validateToken()//true
-      } else {//false
-        next({name: 'home'})
+      }else{//false
+        next({name:'home'})
       }
     },
-    validateSession () {
-      AuthService.dispatch('validateSession', {self: router})
+    validateSession(){
+      AuthService.dispatch('validateSession', {self:router})
     },
   },
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next)=>{
   document.title = 'Alex Christian(management) | ' + to.meta.title
   router.options.methods.verifyRoutesWithStorage(to)
   router.options.methods.addHeaderAuthorization()
-  const requireAuth = to.matched.some(record => record.meta.auth)
-  
-  if (requireAuth) {//authorized
-    
-    if (to.name == 'login' && AuthService.state.isLoggedIn) {
-      next({name: 'login'})
-    } else {
-      if (router.options.methods.verifyTokenAuth(next)) {//true
-        next({name: 'login'})//Si paso algo con el token volvemos a login
-      } else {//false
-        if (router.options.methods.validateSession()) {//Validamos si el token ha vencido
+  const requireAuth = to.matched.some(record=>record.meta.auth)
+
+  if(requireAuth){//authorized
+
+    if(to.name == 'login' && AuthService.state.isLoggedIn){
+      next({name:'login'})
+    }else{
+      if(router.options.methods.verifyTokenAuth(next)){//true
+        next({name:'login'})//Si paso algo con el token volvemos a login
+      }else{//false
+        if(router.options.methods.validateSession()){//Validamos si el token ha vencido
           next()//Sino continuamos con la navegacion
         }
       }
     }
-    
-  } else {//not authorized
-    
-    if (router.options.methods.verifyTokenNotAuth(from, next)) {//true
+
+  }else{//not authorized
+
+    if(router.options.methods.verifyTokenNotAuth(from, next)){//true
       next()//Si quieren ir a "login", ejecutara verifyTokenAuth()
-    } else {//false
-      next({name: 'home'})//Sino redireccionamos a "home", ejecutara verifyTokenAuth()
+    }else{//false
+      next({name:'home'})//Sino redireccionamos a "home", ejecutara verifyTokenAuth()
     }
-    
+
   }
 })
 

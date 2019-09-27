@@ -231,28 +231,7 @@ export default {
       }
     }
   },
-  getCount(data){
-    if(typeof data == 'object'){
-      return data.length
-    }
-  },
-  getDocuments(){
-    return [
-      {id:'ruc', value:'Registro Unico del Contribuyente (RUC)'},
-      {id:'dni', value:'Documento Nacional de Identidad (DNI)'},
-      {id:'pasaporte', value:'Pasaporte'},
-      {id:'carnet', value:'Carnet de Extranjero'},
-    ]
-  },
-  getRegions(){
-    return [
-      {id:'1', value:'Lima'},
-      {id:'2', value:'Trujillo'},
-      {id:'3', value:'Arequipa'},
-      {id:'4', value:'Tacna'},
-    ]
-  },
-  getSecondsToFormatHHMMSS(param_seconds){
+  secToTime(param_seconds){
     let sec_num = parseInt(param_seconds, 10),
     hh = Math.floor(sec_num / 3600),
     mm = Math.floor((sec_num - (hh * 3600)) / 60),
