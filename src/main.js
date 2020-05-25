@@ -10,7 +10,6 @@ import 'bootstrap'
 
 Vue.use(BootstrapVue)
 
-
 Vue.config.productionTip = false
 Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
