@@ -11,17 +11,7 @@
               <div class="card-title my-auto h5 text-secondary">Posts</div>
             </div>
             <div class="col-6 text-right my-auto">
-              <button id="d1" type="button" class="btn btn-light dropdown-toggle my-auto" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-bars mr-1"></i>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="d1">
-                <router-link :to="{name:'post-create'}" class="dropdown-item">Create Post</router-link>
-                <a class="dropdown-item" href="#">Export Data</a>
-                <a class="dropdown-item" href="#">Generate Backup</a>
-                <a class="dropdown-item" href="#">Activate Paginate</a>
-                <a class="dropdown-item" href="#">Preferences</a>
-              </div>
+              <router-link :to="{name:'post-create'}" class="btn btn-primary"><i class="fa fa-plus mr-1"></i><span>New Post</span></router-link>
             </div>
           </div>
           <hr>

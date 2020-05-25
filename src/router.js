@@ -134,7 +134,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = 'Alex Christian(management) | ' + to.meta.title
+  document.title = 'Alex Christian (cms) | ' + to.meta.title
   router.options.methods.verifyRoutesWithStorage(to)
   router.options.methods.addHeaderAuthorization()
   const requireAuth = to.matched.some(record => record.meta.auth)

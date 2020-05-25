@@ -7,7 +7,7 @@
             <!-- Navigation -->
             <navbar/>
             <!-- Page Content -->
-          <div class="col-11 mx-auto">
+          <!--<div class="mx-auto">-->
             <div class="container-fluid mt-3 mb-3">
 
                 <!-- Content Row -->
@@ -25,7 +25,7 @@
                 </div>
                 <!-- /.row -->
             </div>
-          </div>
+          <!--</div>-->
             <!-- /.container -->
         </template>
     </div>

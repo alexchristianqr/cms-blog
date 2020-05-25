@@ -31,6 +31,7 @@ export default new Vuex.Store({
         self.loading.button = false
         self.params.password = ''
         self.$refs.inputPassword.focus()
+        self.errors.message = e.response.data
         console.error(e)
       })
     },

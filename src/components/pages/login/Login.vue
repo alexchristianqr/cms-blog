@@ -24,6 +24,12 @@
                         <input v-model="params.password" ref="inputPassword" name="password" class="form-control mb-1" type="password" placeholder="password" required>
                         <span v-if="errors.password !== '' " class="help-block"><small><strong>{{errors.password}}</strong></small></span>
                     </div>
+                  <div v-if="errors.message != null" class="form-group">
+                    <div class="alert alert-danger">
+                      <h5>Error</h5>
+                      <span class="small">{{errors.message}}</span>
+                    </div>
+                  </div>
                     <div class="form-group-sm">
                         <template v-if="loading.button">
                             <button type="button" class="btn btn-primary btn-block btn-lg" disabled>
@@ -54,6 +60,7 @@
             errors: {
                 email: '',
                 password: '',
+                message: null,
             },
             loading: {
                 button: false,
