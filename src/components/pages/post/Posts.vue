@@ -19,7 +19,7 @@
             <div class="input-group w-25">
               <input v-model="inputSearch" ref="ref_inputSearch" type="search" placeholder="Search" class="form-control" data-toggle="tooltip" data-placement="top" title="Buscar">
               <div v-if="inputSearch != ''" class="input-group-append">
-                <button title="Limpiar" @click="cleanSearch()" type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top">
+                <button title="Limpiar" @click="cleanSearch()" type="button" class="btn btn-secondary">
                   <i class="fa fa-close"></i>
                 </button>
               </div>
