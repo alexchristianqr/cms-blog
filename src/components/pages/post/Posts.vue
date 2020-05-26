@@ -17,19 +17,20 @@
           <hr>
           <div class="form-inline">
             <div class="input-group w-25">
-              <input v-model="inputSearch" ref="ref_inputSearch" type="search" placeholder="Search"
-                     class="form-control">
+              <input v-model="inputSearch" ref="ref_inputSearch" type="search" placeholder="Search" class="form-control" data-toggle="tooltip" data-placement="top" title="Buscar">
               <div v-if="inputSearch != ''" class="input-group-append">
-                <button title="Clean input search" @click="cleanSearch()" type="button" class="btn btn-secondary">
+                <button title="Limpiar" @click="cleanSearch()" type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top">
                   <i class="fa fa-close"></i>
                 </button>
               </div>
             </div>
-            <div title="Fecha" class="date_range form-control w-30 text-truncate">
-              <i class="fa fa-calendar mr-1 text-primary"></i>
-              <span></span>
-            </div>
-            <button class="btn btn-primary" @click="doRequestServer"><i class="fa fa-refresh fa-fw"></i></button>
+            <select data-toggle="tooltip" data-placement="top" title="Estado" class="form-control" v-model="params.status" @change="doRequestServer">
+              <option value="">TODOS</option>
+              <option value="A">ACTIVO</option>
+              <option value="I">INACTIVO</option>
+              <option value="P">PENDIENTE</option>
+            </select>
+            <button class="btn btn-primary" @click="doRequestServer" data-toggle="tooltip" data-placement="top" title="Actualizar"><i class="fa fa-refresh fa-fw"></i></button>
           </div>
         </div>
         <div class="card-body">
@@ -113,6 +114,7 @@
       dataPost: {},
       inputSearch: '',
       params: {
+        status: 'A',
         page: 1,
         paginate: 5,
         date_range: Moment().subtract(6, 'days').format('YYYY-MM-DD') + '/' + Moment().format('YYYY-MM-DD'),
@@ -145,6 +147,11 @@
         this.inputSearch = ''
         this.$refs.ref_inputSearch.focus()
       },
+    },
+    watch:{
+      '$route'(){
+        this.load()
+      }
     },
     updated () {
       Helper.initializeDateRangePicker({self: this})

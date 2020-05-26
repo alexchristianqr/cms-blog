@@ -35,14 +35,25 @@ export default new Vuex.Store({
       })
     },
     updatePost ({commit}, {self}) {
-      Axios.put(Env.ApiLaravel + '/update-post/' + self.params.id, self.params).
-        then((r) => {
+      let formData = new FormData()
+      if(self.params.file_image != undefined) formData.append("file_image", self.params.file_image)
+      formData.append("content", self.params.content)
+      formData.append("description", self.params.description)
+      formData.append("kind", self.params.kind)
+      formData.append("name", self.params.name)
+      formData.append("path", self.params.path)
+      formData.append("published", self.params.published)
+      formData.append("status", self.params.status)
+      formData.append("tag_id", self.params.tag_id)
+      formData.append("user_id", self.params.user_id)
+      
+      const URL = `${Env.ApiLaravel}/update-post/${self.params.id}`
+      Axios.post(URL, formData).then((r) => {
           if (r.status === 200) {
-            self.$router.push({name: 'posts'})
+            self.$router.replace({name: 'posts'})
             self.loading = false
           }
-        }).
-        catch((e) => {
+        }).catch((e) => {
           console.error(e)
           self.dataErrors = e.response.data
           self.loading = false

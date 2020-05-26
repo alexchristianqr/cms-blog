@@ -12,6 +12,7 @@ import Login from './components/pages/login/Login'
 import Storage from 'vue-local-storage'
 import Axios from 'axios'
 import AuthService from './services/AuthService'
+import $ from 'jquery'
 
 Vue.use(Router)
 
@@ -133,6 +134,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+
   document.title = 'Alex Christian (cms) | ' + to.meta.title
   router.options.methods.verifyRoutesWithStorage(to)
   router.options.methods.addHeaderAuthorization()

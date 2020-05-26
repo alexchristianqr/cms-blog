@@ -7,6 +7,7 @@ import Router from './router'
 import Axios from 'axios'
 import 'jquery'
 import 'bootstrap'
+import './mixins/helpers'
 
 Vue.use(BootstrapVue)
 

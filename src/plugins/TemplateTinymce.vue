@@ -95,7 +95,7 @@
             this.content = this.value
         },
         beforeDestroy(){
-            this.editor.destroy()
+          this.editor.destroy()
         },
         created(){
             setTimeout(() => {
